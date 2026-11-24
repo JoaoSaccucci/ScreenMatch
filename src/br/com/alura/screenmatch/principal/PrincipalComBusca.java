@@ -20,6 +20,13 @@ import java.util.Scanner;
 
 public class PrincipalComBusca {
     public static void main(String[] args) throws IOException, InterruptedException {
+        String apiKey = System.getenv("OMDB_API_KEY");
+        if (apiKey == null || apiKey.isBlank()) {
+            System.out.println("Defina a variável de ambiente OMDB_API_KEY com a sua chave do OMDb.");
+            System.out.println("Veja como no README.md.");
+            return;
+        }
+
         Scanner leitura = new Scanner(System.in);
         String busca = "";
         List<Titulo> titulos = new ArrayList<>();
@@ -37,8 +44,7 @@ public class PrincipalComBusca {
                 break;
             }
 
-            String endereco = "https://www.omdbapi.com/?t=" + busca.replace(" ", "+") + "&apikey=556bd507";
-            System.out.println(endereco);
+            String endereco = "https://www.omdbapi.com/?t=" + busca.replace(" ", "+") + "&apikey=" + apiKey;
             try {
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder()
